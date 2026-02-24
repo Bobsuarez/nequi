@@ -5,6 +5,12 @@ build/
 
 # IDE
 .idea/
+.terraform/
+.terraform.lock.hcl
+.app-key.pem
+.terraform.tfstate
+*.pem
+
 *.iml
 .vscode/
 *.swp
