@@ -1,0 +1,23 @@
+# Build
+build/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+*.hprof
+
+# Sonar
+.sonar/
+.scannerwork/

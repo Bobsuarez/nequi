@@ -1,0 +1,75 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: "franchise"
+  datasource:
+    driver-class-name: "org.postgresql.Driver"
+    host: "localhost"
+    port: 5432
+    database: "postgres"
+    username: "postgres"
+    password: "postgres"
+    schema: "branch_db"
+  devtools:
+    add-properties: false
+  h2:
+    console:
+      enabled: true
+      path: "/h2"
+  profiles:
+    include: null
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+logging:
+  level:
+    org.springframework.security: "DEBUG"
+    org.springframework.web: "DEBUG"
+    # R2DBC - consultas SQL ejecutadas
+    org.springframework.r2dbc: "DEBUG"
+    io.r2dbc.postgresql.QUERY: "DEBUG"
+    io.r2dbc.postgresql.PARAM: "DEBUG"
+    # Spring Data R2DBC - repositorios y binding de parámetros
+    org.springframework.data.r2dbc: "DEBUG"
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"
+jwt:
+  secret: "VQasauJliIvkAJIc29suAFYpKItz7jkinzImfhSxCD4="
+  audience: "pragma-user-service"
+  issuer: "pragma-auth-service"
+  expiration: 86400
+springdoc:
+  api-docs:
+    path: "/api-docs"
+  swagger-ui:
+    path: "/swagger-ui.html"
+    enabled: true
+    operations-sorter: "method"
+    tags-sorter: "alpha"
+swagger:
+  title: "Technology Service API"
+  description: "API documentation for the Technology Service"
+  version: "1.0.0"
+  urlServer: "http://localhost:8081"
+app:
+  outbox:
+    polling-interval-seconds: 2
+    batch-size: 50
+adapter:
+  rabbit-mq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    exchange: order-exchange
+    routing-key: product.#
+    consumer:
+      queue-name: queue-branch

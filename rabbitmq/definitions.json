@@ -1,0 +1,145 @@
+{
+    "vhosts": [
+        {
+            "name": "/"
+        }
+    ],
+    "exchanges": [
+        {
+            "name": "order-exchange",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "dlq-exchange",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        }
+    ],
+    "queues": [
+        {
+            "name": "queue-franchise",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-dead-letter-exchange": "dlq-exchange",
+                "x-dead-letter-routing-key": "dlq.franchise"
+            }
+        },
+        {
+            "name": "queue-branch",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-dead-letter-exchange": "dlq-exchange",
+                "x-dead-letter-routing-key": "dlq.branch"
+            }
+        },
+        {
+            "name": "queue-product",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-dead-letter-exchange": "dlq-exchange",
+                "x-dead-letter-routing-key": "dlq.product"
+            }
+        },
+        {
+            "name": "dlq-franchise",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "dlq-branch",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        },
+        {
+            "name": "dlq-product",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {}
+        }
+    ],
+    "bindings": [
+        {
+            "source": "order-exchange",
+            "vhost": "/",
+            "destination": "queue-franchise",
+            "destination_type": "queue",
+            "routing_key": "franchise.#",
+            "arguments": {}
+        },
+        {
+            "source": "order-exchange",
+            "vhost": "/",
+            "destination": "queue-branch",
+            "destination_type": "queue",
+            "routing_key": "branch.#",
+            "arguments": {}
+        },
+        {
+            "source": "order-exchange",
+            "vhost": "/",
+            "destination": "queue-product",
+            "destination_type": "queue",
+            "routing_key": "product.#",
+            "arguments": {}
+        },
+        {
+            "source": "dlq-exchange",
+            "vhost": "/",
+            "destination": "dlq-franchise",
+            "destination_type": "queue",
+            "routing_key": "dlq.franchise",
+            "arguments": {}
+        },
+        {
+            "source": "dlq-exchange",
+            "vhost": "/",
+            "destination": "dlq-branch",
+            "destination_type": "queue",
+            "routing_key": "dlq.branch",
+            "arguments": {}
+        },
+        {
+            "source": "dlq-exchange",
+            "vhost": "/",
+            "destination": "dlq-product",
+            "destination_type": "queue",
+            "routing_key": "dlq.product",
+            "arguments": {}
+        }
+    ],
+    "users": [
+        {
+            "name": "guest",
+            "password_hash": "31LqsPmSJw//uAI13skZw7PP8VrNv6IyWt7Msxt1U+mY57cQ",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "administrator"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "guest",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ]
+}
