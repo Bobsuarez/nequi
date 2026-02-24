@@ -230,3 +230,27 @@ Con `application.yaml` por defecto (sin variables de entorno), los servicios esp
 - **Usuario / contraseña:** según tu `application.yaml` (p. ej. `postgres` / `postgres`)
 
 Si usas **Opción A**, deja las properties con `localhost`. Si usas **Opción B**, la configuración se sobrescribe por las variables de entorno del `docker-compose`.
+
+### Terraform
+
+Si quieres probar la infraestructura en AWS (RDS, RabbitMQ), puedes usar el módulo Terraform incluido en `companies/nequi/infra` para crear los recursos necesarios. Asegúrate de configurar tus credenciales de AWS y ajustar las variables según tu entorno.
+
+```bash
+# 1. Inicializar
+terraform init
+
+# 2. Ver qué va a crear
+terraform plan -var="github_repo=https://github.com/tu-usuario/tu-repo.git"
+
+# 3. Desplegar
+terraform apply -var="github_repo=https://github.com/tu-usuario/tu-repo.git"
+
+# Para repo privado:
+terraform apply \
+  -var="github_repo=https://github.com/tu-usuario/tu-repo.git" \
+  -var="github_token=ghp_tuTokenAqui"
+
+# 4. ¡IMPORTANTE! Cuando termines, destruir todo
+terraform destroy -var="github_repo=https://github.com/..."
+```   
+

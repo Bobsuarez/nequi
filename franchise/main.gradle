@@ -3,7 +3,7 @@ apply plugin: 'info.solidsoft.pitest.aggregator'
 allprojects {
     repositories {
         flatDir {
-            dirs 'libs'
+            dirs "${rootProject.projectDir}/libs"
         }
         mavenCentral()
         mavenLocal()
